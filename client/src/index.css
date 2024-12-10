@@ -7,3 +7,17 @@
 * {
     font-family: "Outfit", serif;
 }
+
+input:-webkit-autofill {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0px 1000px #333A5C inset !important;
+    -webkit-text-fill-color: #fff !important;
+}
+
+input:-webkit-autofill::first-line {
+    font-family: inherit !important;
+}
+
+input {
+    color: inherit;
+}

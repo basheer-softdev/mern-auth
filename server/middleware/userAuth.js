@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 
+// Middleware to authenticate users by verifying their JWT token...
 const userAuth = async (req, res, next) => {
-    const {token} = req.body;
+    const {token} = req.cookies;
 
     if(!token) {
         return res.json({success: false, message: 'Not Authorized. Login Again'});

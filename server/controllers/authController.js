@@ -2,7 +2,7 @@ import bcyprt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import userModal from "../models/userModels.js";
 import transporter from "../config/nodemailer.js";
-import { EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE } from '../config/emailTemplates.js';
+import { WELCOME_EMAIL_TEMPLATE, EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE } from '../config/emailTemplates.js';
 
 // For New User Registration...
 export const register = async (req, res) => {
@@ -40,7 +40,8 @@ export const register = async (req, res) => {
       from: process.env.SENDER_EMAIL,
       to: email,
       subject: "Welcome Developer",
-      text: `Your account has been created with email id: ${email}`,
+      /* text: `Your account has been created with email id: ${email}`, */
+      html: WELCOME_EMAIL_TEMPLATE.replace('{{name}}', name).replace('{{email}}', email),
     };
 
     await transporter.sendMail(mailOptions);
@@ -75,7 +76,7 @@ export const login = async (req, res) => {
       return res.json({ success: false, message: "Invalid password" });
     }
 
-    const token = jwt.sign({ id: user._id, name: user.name }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
 
